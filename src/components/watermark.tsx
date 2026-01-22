@@ -3,18 +3,12 @@
 import { useEffect, useState } from 'react';
 
 interface WatermarkProps {
-  startTime?: string;
-  endTime?: string;
+  userId?: string;
   color?: string;
   fontSize?: number;
   opacity?: number;
   rotate?: number;
 }
-
-// 将时间字符串转换为时间戳
-const parseTime = (timeStr: string): number => {
-  return new Date(timeStr).getTime();
-};
 
 // 格式化时间为指定格式
 const formatTime = (timestamp: number): string => {
@@ -31,19 +25,22 @@ const formatTime = (timestamp: number): string => {
 };
 
 export default function Watermark({
-  startTime = '2026-1-22 16:37:53.445',
-  endTime = '2026-1-22 17:13:22.154',
+  userId = '001731220',
   color = '#9ca3af',
   fontSize = 16,
   opacity = 0.3,
   rotate = -30,
 }: WatermarkProps) {
   const [watermarkUrl, setWatermarkUrl] = useState('');
-  const [visitCount, setVisitCount] = useState(0);
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
-    // 增加访问次数
-    setVisitCount(prev => prev + 1);
+    // 每秒更新一次时间
+    const timer = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -51,18 +48,9 @@ export default function Watermark({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // 计算当前访问对应的时间
-    const startTimestamp = parseTime(startTime);
-    const endTimestamp = parseTime(endTime);
-    const timeRange = endTimestamp - startTimestamp;
-
-    // 使用访问次数和当前时间戳生成一个确定的时间点
-    // 这样每次页面访问都会得到不同的时间
-    const currentTimestamp = startTimestamp + (timeRange * (visitCount % 100)) / 100;
-    const formattedTime = formatTime(currentTimestamp);
-
-    // 水印文字
-    const text = `001731220 ${formattedTime}`;
+    // 水印文字：用户ID + 当前时间
+    const formattedTime = formatTime(currentTime);
+    const text = `${userId} ${formattedTime}`;
 
     // 设置 canvas 尺寸（增大以增加间距）
     canvas.width = 400;
@@ -85,7 +73,7 @@ export default function Watermark({
     // 转换为 data URL
     const dataUrl = canvas.toDataURL('image/png');
     setWatermarkUrl(dataUrl);
-  }, [visitCount, startTime, endTime, color, fontSize, opacity, rotate]);
+  }, [currentTime, userId, color, fontSize, opacity, rotate]);
 
   return (
     <div
