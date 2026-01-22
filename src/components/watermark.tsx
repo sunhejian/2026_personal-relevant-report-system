@@ -24,9 +24,9 @@ export default function Watermark({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // 设置 canvas 尺寸
-    canvas.width = 200;
-    canvas.height = 100;
+    // 设置 canvas 尺寸（增大以增加间距）
+    canvas.width = 400;
+    canvas.height = 200;
 
     // 设置样式
     ctx.font = `${fontSize}px sans-serif`;
@@ -59,7 +59,7 @@ export default function Watermark({
         zIndex: 9999,
         backgroundImage: `url(${watermarkUrl})`,
         backgroundRepeat: 'repeat',
-        backgroundSize: '200px 100px',
+        backgroundSize: '400px 200px',
       }}
     />
   );
