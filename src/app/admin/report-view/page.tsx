@@ -1,20 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Download, FileText, User, Calendar, Building2, CheckCircle2, XCircle } from 'lucide-react';
+import { ArrowLeft, Download, FileText, User, Calendar, Building2 } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function AdminReportViewPage() {
-  const router = useRouter();
+function ReportViewContent() {
   const searchParams = useSearchParams();
   const reportId = searchParams.get('id');
-
   const [showApproveDialog, setShowApproveDialog] = useState(false);
   const [showRejectDialog, setShowRejectDialog] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
@@ -304,5 +303,15 @@ export default function AdminReportViewPage() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+export default function AdminReportViewPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <p className="text-gray-600">加载中...</p>
+    </div>}>
+      <ReportViewContent />
+    </Suspense>
   );
 }
