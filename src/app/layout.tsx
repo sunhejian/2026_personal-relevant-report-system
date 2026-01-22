@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Watermark from '@/components/watermark';
 
 export const metadata: Metadata = {
   title: {
@@ -61,11 +62,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <body
         className={`antialiased`}
       >
         {children}
+        <Watermark />
       </body>
     </html>
   );
