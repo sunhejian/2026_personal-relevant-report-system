@@ -24,7 +24,7 @@ export default function YearSelectPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
             <div>
-              <h1 className="text-base font-semibold">个人有关事项报告系统</h1>
+              <h1 className="text-base font-semibold">领导干部个人有关事项报告系统</h1>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-600">张三-辽宁分行</span>
