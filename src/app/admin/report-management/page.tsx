@@ -151,6 +151,7 @@ export default function AdminReportManagementPage() {
               <h1 className="text-base font-semibold">领导干部个人有关事项报告系统 - 管理员</h1>
             </div>
             <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">张三-辽宁分行</span>
               <span className="text-sm text-gray-600">管理员</span>
               <Link href="/year-select">
                 <Button variant="outline" size="sm">
