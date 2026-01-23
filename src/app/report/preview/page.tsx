@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,20 @@ export default function PreviewPage() {
   const router = useRouter();
   const [showSubmitDialog, setShowSubmitDialog] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const [completionTime, setCompletionTime] = useState<string>('');
+
+  // 获取当前真实时间
+  useEffect(() => {
+    const now = new Date();
+    const formattedTime = now.toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    setCompletionTime(formattedTime);
+  }, []);
 
   const handleConfirmSubmit = () => {
     setShowSubmitDialog(false);
@@ -299,7 +313,7 @@ export default function PreviewPage() {
                 <li>• 报告年度：2025年</li>
                 <li>• 报告编号：GS2025-000456</li>
                 <li>• 填报人：张三</li>
-                <li>• 完成时间：2025年3月15日 14:30</li>
+                <li>• 完成时间：{completionTime}</li>
               </ul>
             </div>
 
